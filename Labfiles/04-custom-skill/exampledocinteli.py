@@ -17,7 +17,7 @@ https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-sec
 endpoint = "https://intelidoc.cognitiveservices.azure.com/"
 key = "8fe201cfccd7435ea174d8825a05dc8a"
 
-model_id = "LGproject"
+model_id = "LG-model"
 formUrl = "https://documentsproject.blob.core.windows.net/data/LG-Test/6.1_Infotainmentsystem_10A.035.820_MEB%20ICAS3_DoC_V6.pdf?sp=r&st=2024-07-16T14:13:43Z&se=2024-07-17T22:13:43Z&spr=https&sv=2022-11-02&sr=b&sig=F08PkJWbwRso4EvpdNVHY%2FSE1YpHlslSopqA%2FI9ZvEE%3D"
 
 document_analysis_client = DocumentAnalysisClient(
@@ -67,3 +67,4 @@ for i, table in enumerate(result.tables):
             )
         )
 print("-----------------------------------")
+
