@@ -1,3 +1,5 @@
+: <<'END'
+THIS PART DOES NOT MATTER FOR THE LAB, IT IS JUST TO SET UP THE RESOURCES THAT ARE ALLREADY CREATED
 #~!/bin/bash
 
 # Store color codes
@@ -14,14 +16,21 @@ printf "${GREEN}Setting up the Forms Recognizer resource. \n${NORMAL}"
 # First, purge it in case there's a recently deleted one
 SubID=$(az account show --query id --output tsv)
 az resource delete --ids "/subscriptions/${SubID}/providers/Microsoft.CognitiveServices/locations/westus/resourceGroups/${resourceGroupName}/deletedAccounts/FormsRecognizer"
-# Now, create the new one
-az cognitiveservices account create --kind FormRecognizer --location westus --name FormsRecognizer --resource-group $resourceGroupName --sku F0 --yes
+az cognitiveservices account create --kind FormRecognizer --location swedencentral --name FormsRecognizer --resource-group $resourceGroupName --sku S0 --yes
+# Create the Cognitive Search resource
+printf "${GREEN}Setting up Azure Cognitive Search. \n${NORMAL}"
+# Purge any existing search resource with the same name
+az resource delete --ids "/subscriptions/${SubID}/resourceGroups/${resourceGroupName}/providers/Microsoft.Search/searchServices/enrichedcognitivesearch"
+##
+END
+NORMAL=$(tput sgr0)
+GREEN=$(tput setaf 2)
+resourceGroupName=anlysisandextraction
 
 # Create the Cognitive Search resource
 printf "${GREEN}Setting up Azure Cognitive Search. \n${NORMAL}"
 # Purge any existing search resource with the same name
 az resource delete --ids "/subscriptions/${SubID}/resourceGroups/${resourceGroupName}/providers/Microsoft.Search/searchServices/enrichedcognitivesearch"
 # Now, create the new one
-az search service create --name enrichedcognitivesearch --location westus --resource-group $resourceGroupName --sku Free --partition-count 1 --replica-count 1
-
+az search service create --name enrichedcognitivesearch$RANDOM --location swedencentral --resource-group $resourceGroupName --sku S1
 printf "${GREEN}Setup completed. \n${NORMAL}"
